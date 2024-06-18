@@ -9,7 +9,7 @@ public class PdfFileDto implements Serializable {
     private static final Long serialVersionUID = 1L;
     private LocalDateTime data_publicacao;
     private LocalDateTime data_sistema;
-    private byte[] conteudo;
+    private String conteudo;
     public PdfFileDto() {
     }
     public PdfFileDto(PdfFile obj) {
@@ -34,11 +34,11 @@ public class PdfFileDto implements Serializable {
         this.data_sistema = data_sistema;
     }
 
-    public byte[] getConteudo() {
+    public String getConteudo() {
         return conteudo;
     }
 
-    public void setConteudo(byte[] conteudo) {
+    public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
     }
 }

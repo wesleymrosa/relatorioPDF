@@ -20,12 +20,12 @@ public class PdfFile implements Serializable {
     @Column(name = "data_sistema")
     private LocalDateTime data_sistema;
     @Column(name = "conteudo")
-    private byte[] conteudo;
+    private String conteudo;
 
     public PdfFile() {
     }
 
-    public PdfFile(Long id, LocalDateTime data_publicacao, LocalDateTime data_sistema, byte[] conteudo) {
+    public PdfFile(Long id, LocalDateTime data_publicacao, LocalDateTime data_sistema, String conteudo) {
         this.id = id;
         this.data_publicacao = data_publicacao;
         this.data_sistema = data_sistema;
@@ -56,11 +56,11 @@ public class PdfFile implements Serializable {
         this.data_sistema = data_sistema;
     }
 
-    public byte[] getConteudo() {
+    public String getConteudo() {
         return conteudo;
     }
 
-    public void setConteudo(byte[] conteudo) {
+    public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
     }
 
@@ -69,23 +69,20 @@ public class PdfFile implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PdfFile pdfFile = (PdfFile) o;
-        return Objects.equals(id, pdfFile.id) && Objects.equals(data_publicacao, pdfFile.data_publicacao) && Objects.equals(data_sistema, pdfFile.data_sistema) && Arrays.equals(conteudo, pdfFile.conteudo);
+        return Objects.equals(id, pdfFile.id);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, data_publicacao, data_sistema);
-        result = 31 * result + Arrays.hashCode(conteudo);
-        return result;
+        return Objects.hash(id);
     }
-
     @Override
     public String toString() {
         return "PdfFile{" +
                 "id=" + id +
                 ", data_publicacao=" + data_publicacao +
                 ", data_sistema=" + data_sistema +
-                ", conteudo=" + Arrays.toString(conteudo) +
+                ", conteudo='" + conteudo + '\'' +
                 '}';
     }
 }

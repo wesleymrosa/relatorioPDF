@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -20,11 +21,16 @@ public class PdfFileController {
         this.pdfFileService = pdfFileService;
     }
 
+@PostMapping (value = "/gerar")
+    public void gerar (@RequestBody PdfFile pdfFile) throws FileNotFoundException {
+        this.pdfFileService.gerar(pdfFile);
+    }
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody PdfFileDto pdfFileDto) {
         PdfFile pdfFile = new PdfFile();
         BeanUtils.copyProperties(pdfFileDto, pdfFile);
-        pdfFile.setData_sistema(LocalDateTime.now(ZoneId.of("UTC")));
+        //pdfFile.setData_sistema(LocalDateTime.now(ZoneId.of("UTC")));
+        //pdfFile.setData_publicacao(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.ok().body(pdfFileService.save(pdfFile));
     }
 
