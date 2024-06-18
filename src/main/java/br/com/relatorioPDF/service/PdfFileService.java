@@ -19,7 +19,7 @@ import java.util.Map;
 @Service
 public class PdfFileService {
 
-    public final String RELATORIOS = "classpath:jasper/relatorios";
+    public final String RELATORIOS = "classpath:jasper/relatorios/";
 
     public final String ARQUIVOJRXML = "relatorio.jrxml";
     public  final Logger LOGGER = LoggerFactory.getLogger(PdfFileService.class);
@@ -65,7 +65,7 @@ public class PdfFileService {
     }
 
     private String getDiretorioSave(String name) {
-        this.createDiretorio(name);
+        this.createDiretorio(DESTINOPDF);
         return DESTINOPDF+name.concat(".pdf");
     }
 
