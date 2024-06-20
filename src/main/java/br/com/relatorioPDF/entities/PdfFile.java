@@ -3,7 +3,9 @@ package br.com.relatorioPDF.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -62,6 +64,20 @@ public class PdfFile implements Serializable {
 
     public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
+    }
+
+    public String getLabelDataPublicacao() {
+        if(Objects.isNull(this.data_publicacao)) {
+            return "(sem data de publicação)";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm").format(this.data_publicacao);
+    }
+
+    public String getLabelDataSistema() {
+        if(Objects.isNull(this.data_sistema)) {
+            return "(sem data de inclusão no sistema)";
+        }
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm").format(this.data_sistema);
     }
 
     @Override

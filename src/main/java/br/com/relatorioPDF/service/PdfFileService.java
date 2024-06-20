@@ -4,6 +4,7 @@ import br.com.relatorioPDF.entities.PdfFile;
 import br.com.relatorioPDF.repositories.PdfFileRepository;
 import jakarta.transaction.Transactional;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.util.Map;
 @Service
 public class PdfFileService {
 
-    public final String RELATORIOS = "classpath:jasper/relatorios/";
+    public final String RELATORIOS = "src\\main\\resources\\jasper\\relatorios\\";
 
     public final String ARQUIVOJRXML = "relatorio.jrxml";
     public  final Logger LOGGER = LoggerFactory.getLogger(PdfFileService.class);
@@ -44,15 +45,17 @@ public class PdfFileService {
 
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("id", pdfFile.getId());
-        parametros.put("data_publicacao", pdfFile.getData_publicacao());
-        parametros.put("data_sistema", pdfFile.getData_sistema());
+        parametros.put("data_publicacao", pdfFile.getLabelDataPublicacao());
+        parametros.put("data_sistema", pdfFile.getLabelDataSistema());
         parametros.put("conteudo", pdfFile.getConteudo());
 
         String pathAbsoluto = (String) getAbsolutPath();
 
         String folderDiretorio = getDiretorioSave("relatorios-salvos");
         try {
-            JasperReport report = JasperCompileManager.compileReport(pathAbsoluto);
+            LOGGER.info(pathAbsoluto);
+            //JasperReport report = JasperCompileManager.compileReport(pathAbsoluto);
+            JasperReport report = (JasperReport) JRLoader.loadObject(new File(pathAbsoluto));
             LOGGER.info("report compilado: {} ", pathAbsoluto);
             JasperPrint print = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
             LOGGER.info("jasper print");
@@ -77,6 +80,7 @@ public class PdfFileService {
     }
 
     private Object getAbsolutPath() throws FileNotFoundException {
-        return ResourceUtils.getFile(RELATORIOS+ARQUIVOJRXML).getAbsolutePath();
+        //return ResourceUtils.getFile(RELATORIOS+ARQUIVOJRXML).getAbsolutePath();
+        return ResourceUtils.getFile(RELATORIOS+"relatorio.jasper").getAbsolutePath();
     }
 }
